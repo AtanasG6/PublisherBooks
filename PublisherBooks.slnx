@@ -1,5 +1,6 @@
 <Solution>
   <Project Path="Contracts/Contracts.csproj" />
+  <Project Path="Entities/Entities.csproj" />
   <Project Path="LoggerService/LoggerService.csproj" />
   <Project Path="PublisherBooks/PublisherBooks.csproj" />
 </Solution>
