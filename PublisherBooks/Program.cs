@@ -1,10 +1,14 @@
 using Microsoft.AspNetCore.HttpOverrides;
+using NLog;
 using PublisherBooks.Extensions;
+
+LogManager.Setup().LoadConfigurationFromFile(Path.Combine(Directory.GetCurrentDirectory(), "nlog.config"));
 
 var builder = WebApplication.CreateBuilder(args);
 
 builder.Services.ConfigureCors();
 builder.Services.ConfigureIISIntegration();
+builder.Services.ConfigureLoggerService();
 
 builder.Services.AddControllers();
 
