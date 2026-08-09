@@ -10,4 +10,19 @@ public class PublishersController : ControllerBase
     private readonly IServiceManager _service;
 
     public PublishersController(IServiceManager service) => _service = service;
+
+    [HttpGet]
+    public IActionResult GetPublishers()
+    {
+        try
+        {
+            var publishers = _service.PublisherService.GetAllPublishers(trackChanges: false);
+
+            return Ok(publishers);
+        }
+        catch
+        {
+            return StatusCode(500, "Internal server error");
+        }
+    }
 }
