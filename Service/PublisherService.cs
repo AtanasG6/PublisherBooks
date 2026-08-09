@@ -20,16 +20,8 @@ internal sealed class PublisherService : IPublisherService
 
     public IEnumerable<PublisherDto> GetAllPublishers(bool trackChanges)
     {
-        try
-        {
-            var publishers = _repository.Publisher.GetAllPublishers(trackChanges);
+        var publishers = _repository.Publisher.GetAllPublishers(trackChanges);
 
-            return _mapper.Map<IEnumerable<PublisherDto>>(publishers);
-        }
-        catch (Exception exception)
-        {
-            _logger.LogError($"Something went wrong in the {nameof(GetAllPublishers)} service method {exception}");
-            throw;
-        }
+        return _mapper.Map<IEnumerable<PublisherDto>>(publishers);
     }
 }

@@ -14,15 +14,8 @@ public class PublishersController : ControllerBase
     [HttpGet]
     public IActionResult GetPublishers()
     {
-        try
-        {
-            var publishers = _service.PublisherService.GetAllPublishers(trackChanges: false);
+        var publishers = _service.PublisherService.GetAllPublishers(trackChanges: false);
 
-            return Ok(publishers);
-        }
-        catch
-        {
-            return StatusCode(500, "Internal server error");
-        }
+        return Ok(publishers);
     }
 }
