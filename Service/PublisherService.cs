@@ -1,6 +1,6 @@
 using Contracts;
-using Entities.Models;
 using Service.Contracts;
+using Shared.DataTransferObjects;
 
 namespace Service;
 
@@ -15,11 +15,18 @@ internal sealed class PublisherService : IPublisherService
         _logger = logger;
     }
 
-    public IEnumerable<Publisher> GetAllPublishers(bool trackChanges)
+    public IEnumerable<PublisherDto> GetAllPublishers(bool trackChanges)
     {
         try
         {
-            return _repository.Publisher.GetAllPublishers(trackChanges);
+            var publishers = _repository.Publisher.GetAllPublishers(trackChanges);
+
+            return publishers
+                .Select(publisher => new PublisherDto(
+                    publisher.Id,
+                    publisher.Name,
+                    string.Join(", ", publisher.City, publisher.Country)))
+                .ToList();
         }
         catch (Exception exception)
         {
