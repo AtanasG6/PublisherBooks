@@ -1,3 +1,4 @@
+using AutoMapper;
 using Contracts;
 using Service.Contracts;
 using Shared.DataTransferObjects;
@@ -8,11 +9,13 @@ internal sealed class PublisherService : IPublisherService
 {
     private readonly IRepositoryManager _repository;
     private readonly ILoggerManager _logger;
+    private readonly IMapper _mapper;
 
-    public PublisherService(IRepositoryManager repository, ILoggerManager logger)
+    public PublisherService(IRepositoryManager repository, ILoggerManager logger, IMapper mapper)
     {
         _repository = repository;
         _logger = logger;
+        _mapper = mapper;
     }
 
     public IEnumerable<PublisherDto> GetAllPublishers(bool trackChanges)
@@ -21,12 +24,7 @@ internal sealed class PublisherService : IPublisherService
         {
             var publishers = _repository.Publisher.GetAllPublishers(trackChanges);
 
-            return publishers
-                .Select(publisher => new PublisherDto(
-                    publisher.Id,
-                    publisher.Name,
-                    string.Join(", ", publisher.City, publisher.Country)))
-                .ToList();
+            return _mapper.Map<IEnumerable<PublisherDto>>(publishers);
         }
         catch (Exception exception)
         {
