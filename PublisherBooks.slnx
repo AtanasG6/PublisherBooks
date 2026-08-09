@@ -3,4 +3,5 @@
   <Project Path="Entities/Entities.csproj" />
   <Project Path="LoggerService/LoggerService.csproj" />
   <Project Path="PublisherBooks/PublisherBooks.csproj" />
+  <Project Path="Repository/Repository.csproj" />
 </Solution>
