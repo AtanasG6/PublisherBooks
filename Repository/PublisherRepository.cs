@@ -9,4 +9,9 @@ public class PublisherRepository : RepositoryBase<Publisher>, IPublisherReposito
         : base(repositoryContext)
     {
     }
+
+    public IEnumerable<Publisher> GetAllPublishers(bool trackChanges) =>
+        FindAll(trackChanges)
+            .OrderBy(publisher => publisher.Name)
+            .ToList();
 }
