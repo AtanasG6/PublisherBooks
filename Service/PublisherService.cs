@@ -1,5 +1,6 @@
 using AutoMapper;
 using Contracts;
+using Entities.Exceptions;
 using Service.Contracts;
 using Shared.DataTransferObjects;
 
@@ -23,5 +24,14 @@ internal sealed class PublisherService : IPublisherService
         var publishers = _repository.Publisher.GetAllPublishers(trackChanges);
 
         return _mapper.Map<IEnumerable<PublisherDto>>(publishers);
+    }
+
+    public PublisherDto GetPublisher(Guid publisherId, bool trackChanges)
+    {
+        var publisher = _repository.Publisher.GetPublisher(publisherId, trackChanges);
+        if (publisher is null)
+            throw new PublisherNotFoundException(publisherId);
+
+        return _mapper.Map<PublisherDto>(publisher);
     }
 }

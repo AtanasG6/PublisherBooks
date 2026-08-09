@@ -5,4 +5,5 @@ namespace Service.Contracts;
 public interface IPublisherService
 {
     IEnumerable<PublisherDto> GetAllPublishers(bool trackChanges);
+    PublisherDto GetPublisher(Guid publisherId, bool trackChanges);
 }

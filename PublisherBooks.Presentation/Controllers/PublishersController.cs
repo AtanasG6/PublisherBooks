@@ -18,4 +18,12 @@ public class PublishersController : ControllerBase
 
         return Ok(publishers);
     }
+
+    [HttpGet("{id:guid}")]
+    public IActionResult GetPublisher(Guid id)
+    {
+        var publisher = _service.PublisherService.GetPublisher(id, trackChanges: false);
+
+        return Ok(publisher);
+    }
 }
