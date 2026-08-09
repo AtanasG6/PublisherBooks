@@ -1,4 +1,8 @@
+using PublisherBooks.Extensions;
+
 var builder = WebApplication.CreateBuilder(args);
+
+builder.Services.ConfigureCors();
 
 builder.Services.AddControllers();
 
@@ -10,6 +14,8 @@ else
     app.UseHsts();
 
 app.UseHttpsRedirection();
+
+app.UseCors("CorsPolicy");
 
 app.UseAuthorization();
 
