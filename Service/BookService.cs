@@ -1,6 +1,8 @@
 using AutoMapper;
 using Contracts;
+using Entities.Exceptions;
 using Service.Contracts;
+using Shared.DataTransferObjects;
 
 namespace Service;
 
@@ -15,5 +17,16 @@ internal sealed class BookService : IBookService
         _repository = repository;
         _logger = logger;
         _mapper = mapper;
+    }
+
+    public IEnumerable<BookDto> GetBooks(Guid publisherId, bool trackChanges)
+    {
+        var publisher = _repository.Publisher.GetPublisher(publisherId, trackChanges);
+        if (publisher is null)
+            throw new PublisherNotFoundException(publisherId);
+
+        var booksFromDb = _repository.Book.GetBooks(publisherId, trackChanges);
+
+        return _mapper.Map<IEnumerable<BookDto>>(booksFromDb);
     }
 }

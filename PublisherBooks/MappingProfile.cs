@@ -6,8 +6,12 @@ namespace PublisherBooks;
 
 public class MappingProfile : Profile
 {
-    public MappingProfile() =>
+    public MappingProfile()
+    {
         CreateMap<Publisher, PublisherDto>()
             .ForCtorParam(nameof(PublisherDto.Location),
                 options => options.MapFrom(publisher => publisher.City + ", " + publisher.Country));
+
+        CreateMap<Book, BookDto>();
+    }
 }
