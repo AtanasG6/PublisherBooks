@@ -15,7 +15,12 @@ builder.Services.ConfigureRepositoryManager();
 builder.Services.ConfigureServiceManager();
 builder.Services.AddAutoMapper(configuration => configuration.AddMaps(typeof(Program).Assembly));
 
-builder.Services.AddControllers()
+builder.Services.AddControllers(config =>
+{
+    config.RespectBrowserAcceptHeader = true;
+    config.ReturnHttpNotAcceptable = true;
+})
+    .AddXmlDataContractSerializerFormatters()
     .AddApplicationPart(typeof(PublisherBooks.Presentation.AssemblyReference).Assembly);
 
 var app = builder.Build();

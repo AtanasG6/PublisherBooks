@@ -1,3 +1,8 @@
 namespace Shared.DataTransferObjects;
 
-public record PublisherDto(Guid Id, string? Name, string? Location);
+public record PublisherDto
+{
+    public Guid Id { get; init; }
+    public string? Name { get; init; }
+    public string? Location { get; init; }
+}

@@ -9,7 +9,7 @@ public class MappingProfile : Profile
     public MappingProfile()
     {
         CreateMap<Publisher, PublisherDto>()
-            .ForCtorParam(nameof(PublisherDto.Location),
+            .ForMember(dto => dto.Location,
                 options => options.MapFrom(publisher => publisher.City + ", " + publisher.Country));
 
         CreateMap<Book, BookDto>();
