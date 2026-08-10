@@ -18,4 +18,12 @@ public class BooksController : ControllerBase
 
         return Ok(books);
     }
+
+    [HttpGet("{id:guid}")]
+    public IActionResult GetBookForPublisher(Guid publisherId, Guid id)
+    {
+        var book = _service.BookService.GetBook(publisherId, id, trackChanges: false);
+
+        return Ok(book);
+    }
 }

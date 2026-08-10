@@ -29,4 +29,17 @@ internal sealed class BookService : IBookService
 
         return _mapper.Map<IEnumerable<BookDto>>(booksFromDb);
     }
+
+    public BookDto GetBook(Guid publisherId, Guid id, bool trackChanges)
+    {
+        var publisher = _repository.Publisher.GetPublisher(publisherId, trackChanges);
+        if (publisher is null)
+            throw new PublisherNotFoundException(publisherId);
+
+        var bookFromDb = _repository.Book.GetBook(publisherId, id, trackChanges);
+        if (bookFromDb is null)
+            throw new BookNotFoundException(id);
+
+        return _mapper.Map<BookDto>(bookFromDb);
+    }
 }

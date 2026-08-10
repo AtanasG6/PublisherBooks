@@ -14,4 +14,8 @@ public class BookRepository : RepositoryBase<Book>, IBookRepository
         FindByCondition(book => book.PublisherId.Equals(publisherId), trackChanges)
             .OrderBy(book => book.Title)
             .ToList();
+
+    public Book? GetBook(Guid publisherId, Guid id, bool trackChanges) =>
+        FindByCondition(book => book.PublisherId.Equals(publisherId) && book.Id.Equals(id), trackChanges)
+            .SingleOrDefault();
 }
