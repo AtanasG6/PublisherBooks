@@ -1,6 +1,7 @@
 using AutoMapper;
 using Contracts;
 using Entities.Exceptions;
+using Entities.Models;
 using Service.Contracts;
 using Shared.DataTransferObjects;
 
@@ -33,5 +34,15 @@ internal sealed class PublisherService : IPublisherService
             throw new PublisherNotFoundException(publisherId);
 
         return _mapper.Map<PublisherDto>(publisher);
+    }
+
+    public PublisherDto CreatePublisher(PublisherForCreationDto publisher)
+    {
+        var publisherEntity = _mapper.Map<Publisher>(publisher);
+
+        _repository.Publisher.CreatePublisher(publisherEntity);
+        _repository.Save();
+
+        return _mapper.Map<PublisherDto>(publisherEntity);
     }
 }

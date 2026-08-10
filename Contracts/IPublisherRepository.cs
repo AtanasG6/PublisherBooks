@@ -6,4 +6,5 @@ public interface IPublisherRepository
 {
     IEnumerable<Publisher> GetAllPublishers(bool trackChanges);
     Publisher? GetPublisher(Guid publisherId, bool trackChanges);
+    void CreatePublisher(Publisher publisher);
 }

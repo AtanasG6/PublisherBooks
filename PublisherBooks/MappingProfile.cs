@@ -13,5 +13,7 @@ public class MappingProfile : Profile
                 options => options.MapFrom(publisher => publisher.City + ", " + publisher.Country));
 
         CreateMap<Book, BookDto>();
+
+        CreateMap<PublisherForCreationDto, Publisher>();
     }
 }

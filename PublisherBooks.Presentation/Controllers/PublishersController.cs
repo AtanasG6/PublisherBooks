@@ -1,5 +1,6 @@
 using Microsoft.AspNetCore.Mvc;
 using Service.Contracts;
+using Shared.DataTransferObjects;
 
 namespace PublisherBooks.Presentation.Controllers;
 
@@ -19,11 +20,22 @@ public class PublishersController : ControllerBase
         return Ok(publishers);
     }
 
-    [HttpGet("{id:guid}")]
+    [HttpGet("{id:guid}", Name = "PublisherById")]
     public IActionResult GetPublisher(Guid id)
     {
         var publisher = _service.PublisherService.GetPublisher(id, trackChanges: false);
 
         return Ok(publisher);
+    }
+
+    [HttpPost]
+    public IActionResult CreatePublisher([FromBody] PublisherForCreationDto? publisher)
+    {
+        if (publisher is null)
+            return BadRequest("PublisherForCreationDto object is null");
+
+        var createdPublisher = _service.PublisherService.CreatePublisher(publisher);
+
+        return CreatedAtRoute("PublisherById", new { id = createdPublisher.Id }, createdPublisher);
     }
 }

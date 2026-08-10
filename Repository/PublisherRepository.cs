@@ -18,4 +18,6 @@ public class PublisherRepository : RepositoryBase<Publisher>, IPublisherReposito
     public Publisher? GetPublisher(Guid publisherId, bool trackChanges) =>
         FindByCondition(publisher => publisher.Id.Equals(publisherId), trackChanges)
             .SingleOrDefault();
+
+    public void CreatePublisher(Publisher publisher) => Create(publisher);
 }
