@@ -1,4 +1,5 @@
 using Microsoft.AspNetCore.Mvc;
+using PublisherBooks.Presentation.ModelBinders;
 using Service.Contracts;
 using Shared.DataTransferObjects;
 
@@ -40,7 +41,8 @@ public class PublishersController : ControllerBase
     }
 
     [HttpGet("collection/({ids})", Name = "PublisherCollection")]
-    public IActionResult GetPublisherCollection(IEnumerable<Guid> ids)
+    public IActionResult GetPublisherCollection(
+        [ModelBinder(BinderType = typeof(ArrayModelBinder))] IEnumerable<Guid> ids)
     {
         var publishers = _service.PublisherService.GetByIds(ids, trackChanges: false);
 
