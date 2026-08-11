@@ -19,5 +19,9 @@ public class PublisherRepository : RepositoryBase<Publisher>, IPublisherReposito
         FindByCondition(publisher => publisher.Id.Equals(publisherId), trackChanges)
             .SingleOrDefault();
 
+    public IEnumerable<Publisher> GetByIds(IEnumerable<Guid> ids, bool trackChanges) =>
+        FindByCondition(publisher => ids.Contains(publisher.Id), trackChanges)
+            .ToList();
+
     public void CreatePublisher(Publisher publisher) => Create(publisher);
 }

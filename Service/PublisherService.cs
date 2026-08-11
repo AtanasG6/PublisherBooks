@@ -45,4 +45,34 @@ internal sealed class PublisherService : IPublisherService
 
         return _mapper.Map<PublisherDto>(publisherEntity);
     }
+
+    public IEnumerable<PublisherDto> GetByIds(IEnumerable<Guid> ids, bool trackChanges)
+    {
+        if (ids is null)
+            throw new IdParametersBadRequestException();
+
+        var publisherEntities = _repository.Publisher.GetByIds(ids, trackChanges);
+        if (ids.Count() != publisherEntities.Count())
+            throw new CollectionByIdsBadRequestException();
+
+        return _mapper.Map<IEnumerable<PublisherDto>>(publisherEntities);
+    }
+
+    public (IEnumerable<PublisherDto> publishers, string ids) CreatePublisherCollection(
+        IEnumerable<PublisherForCreationDto>? publisherCollection)
+    {
+        if (publisherCollection is null)
+            throw new PublisherCollectionBadRequestException();
+
+        var publisherEntities = _mapper.Map<IEnumerable<Publisher>>(publisherCollection);
+        foreach (var publisher in publisherEntities)
+            _repository.Publisher.CreatePublisher(publisher);
+
+        _repository.Save();
+
+        var publisherCollectionToReturn = _mapper.Map<IEnumerable<PublisherDto>>(publisherEntities);
+        var ids = string.Join(",", publisherCollectionToReturn.Select(publisher => publisher.Id));
+
+        return (publishers: publisherCollectionToReturn, ids: ids);
+    }
 }

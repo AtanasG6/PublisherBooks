@@ -38,4 +38,20 @@ public class PublishersController : ControllerBase
 
         return CreatedAtRoute("PublisherById", new { id = createdPublisher.Id }, createdPublisher);
     }
+
+    [HttpGet("collection/({ids})", Name = "PublisherCollection")]
+    public IActionResult GetPublisherCollection(IEnumerable<Guid> ids)
+    {
+        var publishers = _service.PublisherService.GetByIds(ids, trackChanges: false);
+
+        return Ok(publishers);
+    }
+
+    [HttpPost("collection")]
+    public IActionResult CreatePublisherCollection([FromBody] IEnumerable<PublisherForCreationDto>? publisherCollection)
+    {
+        var result = _service.PublisherService.CreatePublisherCollection(publisherCollection);
+
+        return CreatedAtRoute("PublisherCollection", new { result.ids }, result.publishers);
+    }
 }
