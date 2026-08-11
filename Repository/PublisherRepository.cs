@@ -24,4 +24,6 @@ public class PublisherRepository : RepositoryBase<Publisher>, IPublisherReposito
             .ToList();
 
     public void CreatePublisher(Publisher publisher) => Create(publisher);
+
+    public void DeletePublisher(Publisher publisher) => Delete(publisher);
 }

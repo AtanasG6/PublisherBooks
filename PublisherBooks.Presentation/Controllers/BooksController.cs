@@ -38,4 +38,12 @@ public class BooksController : ControllerBase
 
         return CreatedAtRoute("GetBookForPublisher", new { publisherId, id = bookToReturn.Id }, bookToReturn);
     }
+
+    [HttpDelete("{id:guid}")]
+    public IActionResult DeleteBookForPublisher(Guid publisherId, Guid id)
+    {
+        _service.BookService.DeleteBookForPublisher(publisherId, id, trackChanges: false);
+
+        return NoContent();
+    }
 }

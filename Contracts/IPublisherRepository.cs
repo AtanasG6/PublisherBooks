@@ -8,4 +8,5 @@ public interface IPublisherRepository
     Publisher? GetPublisher(Guid publisherId, bool trackChanges);
     IEnumerable<Publisher> GetByIds(IEnumerable<Guid> ids, bool trackChanges);
     void CreatePublisher(Publisher publisher);
+    void DeletePublisher(Publisher publisher);
 }

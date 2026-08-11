@@ -75,4 +75,14 @@ internal sealed class PublisherService : IPublisherService
 
         return (publishers: publisherCollectionToReturn, ids: ids);
     }
+
+    public void DeletePublisher(Guid publisherId, bool trackChanges)
+    {
+        var publisher = _repository.Publisher.GetPublisher(publisherId, trackChanges);
+        if (publisher is null)
+            throw new PublisherNotFoundException(publisherId);
+
+        _repository.Publisher.DeletePublisher(publisher);
+        _repository.Save();
+    }
 }

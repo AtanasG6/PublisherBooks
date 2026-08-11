@@ -10,4 +10,5 @@ public interface IPublisherService
     IEnumerable<PublisherDto> GetByIds(IEnumerable<Guid> ids, bool trackChanges);
     (IEnumerable<PublisherDto> publishers, string ids) CreatePublisherCollection(
         IEnumerable<PublisherForCreationDto>? publisherCollection);
+    void DeletePublisher(Guid publisherId, bool trackChanges);
 }

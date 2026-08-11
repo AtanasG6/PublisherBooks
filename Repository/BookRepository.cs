@@ -24,4 +24,6 @@ public class BookRepository : RepositoryBase<Book>, IBookRepository
         book.PublisherId = publisherId;
         Create(book);
     }
+
+    public void DeleteBook(Book book) => Delete(book);
 }

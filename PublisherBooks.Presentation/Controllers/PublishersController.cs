@@ -56,4 +56,12 @@ public class PublishersController : ControllerBase
 
         return CreatedAtRoute("PublisherCollection", new { result.ids }, result.publishers);
     }
+
+    [HttpDelete("{id:guid}")]
+    public IActionResult DeletePublisher(Guid id)
+    {
+        _service.PublisherService.DeletePublisher(id, trackChanges: false);
+
+        return NoContent();
+    }
 }
