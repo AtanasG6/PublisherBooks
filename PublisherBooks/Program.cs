@@ -1,5 +1,6 @@
 using Contracts;
 using Microsoft.AspNetCore.HttpOverrides;
+using Microsoft.AspNetCore.Mvc;
 using NLog;
 using PublisherBooks.Extensions;
 
@@ -14,6 +15,11 @@ builder.Services.ConfigureSqlContext(builder.Configuration);
 builder.Services.ConfigureRepositoryManager();
 builder.Services.ConfigureServiceManager();
 builder.Services.AddAutoMapper(configuration => configuration.AddMaps(typeof(Program).Assembly));
+
+builder.Services.Configure<ApiBehaviorOptions>(options =>
+{
+    options.SuppressModelStateInvalidFilter = true;
+});
 
 builder.Services.AddControllers(config =>
 {
