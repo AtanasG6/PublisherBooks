@@ -18,4 +18,10 @@ public class BookRepository : RepositoryBase<Book>, IBookRepository
     public Book? GetBook(Guid publisherId, Guid id, bool trackChanges) =>
         FindByCondition(book => book.PublisherId.Equals(publisherId) && book.Id.Equals(id), trackChanges)
             .SingleOrDefault();
+
+    public void CreateBookForPublisher(Guid publisherId, Book book)
+    {
+        book.PublisherId = publisherId;
+        Create(book);
+    }
 }
