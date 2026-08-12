@@ -71,4 +71,19 @@ internal sealed class BookService : IBookService
         _repository.Book.DeleteBook(bookForPublisher);
         _repository.Save();
     }
+
+    public void UpdateBookForPublisher(Guid publisherId, Guid id, BookForUpdateDto bookForUpdate,
+        bool publisherTrackChanges, bool bookTrackChanges)
+    {
+        var publisher = _repository.Publisher.GetPublisher(publisherId, publisherTrackChanges);
+        if (publisher is null)
+            throw new PublisherNotFoundException(publisherId);
+
+        var bookEntity = _repository.Book.GetBook(publisherId, id, bookTrackChanges);
+        if (bookEntity is null)
+            throw new BookNotFoundException(id);
+
+        _mapper.Map(bookForUpdate, bookEntity);
+        _repository.Save();
+    }
 }

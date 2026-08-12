@@ -46,4 +46,16 @@ public class BooksController : ControllerBase
 
         return NoContent();
     }
+
+    [HttpPut("{id:guid}")]
+    public IActionResult UpdateBookForPublisher(Guid publisherId, Guid id, [FromBody] BookForUpdateDto? book)
+    {
+        if (book is null)
+            return BadRequest("BookForUpdateDto object is null");
+
+        _service.BookService.UpdateBookForPublisher(publisherId, id, book,
+            publisherTrackChanges: false, bookTrackChanges: true);
+
+        return NoContent();
+    }
 }
